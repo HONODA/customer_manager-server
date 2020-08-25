@@ -3,8 +3,9 @@ package sqls
 import _ "github.com/go-sql-driver/mysql"
 import "github.com/jmoiron/sqlx"
 import "github.com/jander/golog/logger"
+import "fmt"
 
-type conninf struct {
+type Conninf struct {
 	database string
 	host     string
 	port     string
@@ -12,7 +13,7 @@ type conninf struct {
 	pasw     string
 }
 
-func (inf *conninf) Inf() {
+func (inf *Conninf) Inf() {
 	inf.database = "CAOM"
 	inf.host = "localhost"
 	inf.pasw = ""
@@ -21,12 +22,12 @@ func (inf *conninf) Inf() {
 
 }
 
-func (i *conninf) Conn() *sqlx.DB {
+func (i *Conninf) Conn() *sqlx.DB {
 	i.Inf()
 	database, err := sqlx.Open("mysql", i.user+":"+i.pasw+"@tcp("+i.host+":"+i.port+")/"+i.database)
 	if err != nil {
 		logger.Fatal(err)
-		print("HN:ERROR LOADING DATABASE")
+		fmt.Println("HN:ERROR LOADING DATABASE")
 		return nil
 	}
 	return database

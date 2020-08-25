@@ -5,10 +5,12 @@ import "testing"
 
 func TestConn(t *testing.T) {
 	fmt.Print("hello")
-	con := new(conninf)
+	con := new(Conninf)
 	database := con.Conn()
 	if database != nil {
-		row := database.QueryRow("select id, name from customer")
+		var totalcount, pagecount = 0, 0
+
+		row := database.QueryRow("CALL sp_viewPage('id,name','customer','1=1','Id desc',1 ,20 ,? ,?)", totalcount, pagecount)
 		var idx int
 		var name = ""
 		if err := row.Scan(&idx, &name); err != nil {
