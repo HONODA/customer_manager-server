@@ -2,6 +2,7 @@ package main
 
 import (
 	"./caom"
+	"./caom/common"
 	"fmt"
 	"github.com/jander/golog/logger"
 	"github.com/kardianos/service"
@@ -19,7 +20,8 @@ func (p *program) Start(s service.Service) error {
 }
 
 func (p *program) run() {
-	fmt.Println("HELP")
+	fmt.Println("运行服务")
+
 	mainapi.RunServerApp()
 
 }
@@ -31,7 +33,7 @@ func (p *program) Stop(s service.Service) error {
 }
 
 func main() {
-
+	common.Loggerinit()
 	svcConfig := &service.Config{
 
 		Name: "CAOMSERVER", //服务显示名称
@@ -47,9 +49,7 @@ func main() {
 	s, err := service.New(prg, svcConfig)
 
 	if err != nil {
-
 		logger.Fatal(err)
-
 	}
 
 	if err != nil {

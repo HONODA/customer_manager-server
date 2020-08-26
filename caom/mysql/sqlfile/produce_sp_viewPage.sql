@@ -64,5 +64,5 @@ ELSE
 SET _pagecount = _totalcount DIV _pageSize;
 END IF;
 END IF;
-
+SELECT _totalcount,_pagecount;
 END
