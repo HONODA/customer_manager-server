@@ -10,7 +10,7 @@ const (
 )
 
 func convertList2Json(l *list.List) string {
-	var str = "["
+	var str = "{\"message\":["
 	var count = l.Len() - 1
 	for i := l.Front(); i != nil; i = i.Next() {
 		if count > 0 {
@@ -18,23 +18,14 @@ func convertList2Json(l *list.List) string {
 		} else if count == 0 {
 			str += i.Value.(string) //强制转string
 		}
+		count--
 	}
-	str += "]"
+	str += "]}"
 	return str
 }
 func RunServerApp() {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		list := Getcustomerlist(1)
-		str := ""
-		if DATASHOWJSON {
-			str = convertList2Json(list)
-		} else {
-			c.JSON(500, gin.H{"message": "暂时没有结构化STRUCT"})
-			return
-		}
-		c.JSON(200, str)
-	})
-
+	r.POST("/getcustomerlist", Getcustomerlist)
+	r.POST("/getcustomerdetaillist",Getcustomerdetaillist)
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
